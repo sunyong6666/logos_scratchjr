@@ -9,6 +9,7 @@ enum LedRing {
     //% block="2"
     Ring2 = 0x26
 }
+
 enum LedIndex {
     //% block="1"
     LED1 = 0,
@@ -57,8 +58,6 @@ namespace LogosScratchJr {
 
         pins.i2cWriteBuffer(ring, buf);
     }
-    
-   
     
     //% blockId=ledRingSetColor
     //% block="LED ring %ring set color r %r g %g b %b"
@@ -148,5 +147,4 @@ namespace LogosScratchJr {
         refreshLedRing(ring);
     }
 
-  
 }
