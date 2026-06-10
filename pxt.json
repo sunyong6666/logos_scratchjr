@@ -6,10 +6,13 @@
     },
     "files": [
         "main.ts",
-        "README.md",
+        "block/ledRing.ts",
         "block/key.ts",
         "block/ultrasonic.ts",
-        "block/soil.ts"
+        "block/soil.ts",
+        "block/light.ts",
+        "block/veml6040.ts",
+        "README.md"
     ],
     "testFiles": [
         "test.ts"
