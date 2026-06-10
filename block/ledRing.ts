@@ -2,6 +2,13 @@
 const ledRingI2cAddress = 0x24;
 const LED_BASE = 0x0A;
 
+enum LedRing {
+    //% block="1"
+    Ring1 = 0x24,
+
+    //% block="2"
+    Ring2 = 0x26
+}
 enum LedIndex {
     //% block="1"
     LED1 = 0,
@@ -39,7 +46,7 @@ let ledColors = [
 namespace LogosScratchJr {
 
     //点亮
-    function refreshLedRing(): void {
+    function refreshLedRing(ring: LedRing): void {
         let buf = pins.createBuffer(22);
 
         buf[0] = LED_BASE + 0x01;
@@ -48,19 +55,20 @@ namespace LogosScratchJr {
             buf[i + 1] = ledColors[i];
         }
 
-        pins.i2cWriteBuffer(ledRingI2cAddress, buf);
+        pins.i2cWriteBuffer(ring, buf);
     }
     
    
     
     //% blockId=ledRingSetColor
-    //% block="set ring color r %r g %g b %b"
+    //% block="LED ring %ring set color r %r g %g b %b"
     //% group="LED Ring"
     //% weight=100
-    //% r.min=0 r.max=255 r.defl=0
-    //% g.min=0 g.max=255 g.defl=0
+    //% r.min=0 r.max=255 r.defl=0 
+    //% g.min=0 g.max=255 g.defl=0 
     //% b.min=0 b.max=255 b.defl=0
     export function ledRingSetColor(
+        ring: LedRing,
         r: number,
         g: number,
         b: number
@@ -76,17 +84,18 @@ namespace LogosScratchJr {
             ledColors[i * 3 + 2] = b;
         }
 
-        refreshLedRing();
+        refreshLedRing(ring);
     }
 
     //% blockId=ledRingSetPixel
-    //% block="set LED %index color r %r g %g b %b"
+    //% block="LED ring %ring set LED %index color r %r g %g b %b"
     //% group="LED Ring"
     //% weight=98
-    //% r.min=0 r.max=255 r.defl=0
-    //% g.min=0 g.max=255 g.defl=0
+    //% r.min=0 r.max=255 r.defl=0 
+    //% g.min=0 g.max=255 g.defl=0 
     //% b.min=0 b.max=255 b.defl=0
     export function ledRingSetPixel(
+        ring: LedRing,
         index: LedIndex,
         r: number,
         g: number,
@@ -101,31 +110,43 @@ namespace LogosScratchJr {
         ledColors[index * 3 + 1] = g;
         ledColors[index * 3 + 2] = b;
 
-        refreshLedRing();
+        refreshLedRing(ring);
     }
 
     //% blockId=ledRingOffPixel
-    //% block="turn off LED %index"
+    //% block="LED ring %ring turn off LED %index"
     //% group="LED Ring"
     //% weight=97
-    export function ledRingOffPixel(index: LedIndex): void {
+    //% r.min=0 r.max=255 r.defl=0 
+    //% g.min=0 g.max=255 g.defl=0 
+    //% b.min=0 b.max=255 b.defl=0
+    export function ledRingOffPixel(
+        ring: LedRing,
+        index: LedIndex
+    ): void {
 
         ledColors[index * 3 + 0] = 0;
         ledColors[index * 3 + 1] = 0;
         ledColors[index * 3 + 2] = 0;
 
-        refreshLedRing();
+        refreshLedRing(ring);
     }
-
+    
     //% blockId=ledRingOffAll
-    //% block="turn off all LEDs"
+    //% block="LED ring %ring turn off all LEDs"
     //% group="LED Ring"
     //% weight=96
-    export function ledRingOffAll(): void {
+    //% r.min=0 r.max=255 r.defl=0 
+    //% g.min=0 g.max=255 g.defl=0 
+    //% b.min=0 b.max=255 b.defl=0
+    export function ledRingOffAll(ring: LedRing): void {
+
         for (let i = 0; i < 21; i++) {
             ledColors[i] = 0;
         }
 
-        refreshLedRing();
+        refreshLedRing(ring);
     }
+
+  
 }
