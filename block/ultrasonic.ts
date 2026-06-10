@@ -8,6 +8,7 @@ namespace LogosScratchJr {
     //% group="Ultrasonic"
     //% weight=100
     export function ultrasonicDistance(): number {
+        basic.pause(20);
         let buf = pins.createBuffer(1);
         buf[0] = ULTRASONIC_BASE + 0x00;
 
