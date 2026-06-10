@@ -1,38 +1,49 @@
+//-------按键-------
+const buttonI2cAddress = 0x22;  // I2C设备地址
+const BUTTON_BASE = 0x0A;
 
-/**
-* Use this file to define custom functions and blocks.
-* Read more at https://makecode.microbit.org/blocks/custom
-*/
+namespace LogosScratchJr {
+    //% blockId=buttonPressed
+    //% block="button pressed?"
+    //% group="Button"
+    //% weight=100
+    export function buttonPressed(): boolean {
+        let buf = pins.createBuffer(1);
+        buf[0] = BUTTON_BASE + 0x00;
 
-enum MyEnum {
-    //% block="one"
-    One,
-    //% block="two"
-    Two
-}
+        pins.i2cWriteBuffer(buttonI2cAddress, buf);
 
-/**
- * Custom blocks
- */
-//% weight=100 color=#0fbc11 icon=""
-namespace custom {
-    /**
-     * TODO: describe your function here
-     * @param n describe parameter here, eg: 5
-     * @param s describe parameter here, eg: "Hello"
-     * @param e describe parameter here
-     */
-    //% block
-    export function foo(n: number, s: string, e: MyEnum): void {
-        // Add code here
+        let r = pins.i2cReadBuffer(buttonI2cAddress, 1);
+        return r[0] == 1;
     }
 
-    /**
-     * TODO: describe your function here
-     * @param value describe value here, eg: 5
-     */
-    //% block
-    export function fib(value: number): number {
-        return value <= 1 ? value : fib(value -1) + fib(value - 2);
+    //% blockId=buttonLongPressed
+    //% block="button long pressed?"
+    //% group="Button"
+    //% weight=99
+    export function buttonLongPressed(): boolean {
+        let buf = pins.createBuffer(1);
+        buf[0] = BUTTON_BASE + 0x01;
+
+        pins.i2cWriteBuffer(buttonI2cAddress, buf, true);
+
+        let r = pins.i2cReadBuffer(buttonI2cAddress, 1);
+        return r[0] == 2;
     }
+
+    //% blockId=buttonClickCount
+    //% block="click count"
+    //% group="Button"
+    //% weight=98
+    export function buttonClickCount(): number {
+        let buf = pins.createBuffer(1);
+        buf[0] = BUTTON_BASE + 0x02;
+
+        pins.i2cWriteBuffer(buttonI2cAddress, buf, true);
+
+        let r = pins.i2cReadBuffer(buttonI2cAddress, 1);
+
+        return r[0];
+    }
+
 }

@@ -7,7 +7,8 @@
     "files": [
         "main.ts",
         "README.md",
-        "block/key.ts"
+        "block/key.ts",
+        "block/ultrasonic.ts"
     ],
     "testFiles": [
         "test.ts"
