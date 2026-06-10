@@ -6,7 +6,8 @@
     },
     "files": [
         "main.ts",
-        "README.md"
+        "README.md",
+        "block/key.ts"
     ],
     "testFiles": [
         "test.ts"
