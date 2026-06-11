@@ -78,20 +78,20 @@ namespace LogosScratchJr {
     //#########################################################################
     //################################## 单电机 #########################
     //#########################################################################
-    //% blockId=motorSpeed
-    //% block="get %motor motor speed"
-    //% group="Motor"
-    //% weight=89
-    export function motorSpeed(motor: MotorLR): number {
-        let BASE = motor + 0x00;
-        let cmdBuf = pins.createBuffer(1);
-        cmdBuf[0] = BASE;
+    // //% blockId=motorSpeed
+    // //% block="get %motor motor speed"
+    // //% group="Motor"
+    // //% weight=89
+    // export function motorSpeed(motor: MotorLR): number {
+    //     let BASE = motor + 0x00;
+    //     let cmdBuf = pins.createBuffer(1);
+    //     cmdBuf[0] = BASE;
 
-        pins.i2cWriteBuffer(i2cAddress, cmdBuf);
+    //     pins.i2cWriteBuffer(i2cAddress, cmdBuf);
 
-        let readBuf = pins.i2cReadBuffer(i2cAddress, 1);
-        return readBuf.getNumber(NumberFormat.Int8BE, 0);
-    }
+    //     let readBuf = pins.i2cReadBuffer(i2cAddress, 1);
+    //     return readBuf.getNumber(NumberFormat.Int8BE, 0);
+    // }
    
     //% blockId=motorMove
     //% block="%motor motor %motion at speed %speed"
