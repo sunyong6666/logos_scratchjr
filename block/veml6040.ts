@@ -158,12 +158,12 @@ namespace LogosScratchJr {
         //serial.writeLine("S="+s + " w="+w)
         // ===== 黑白判断 =====
         // 黑色：亮度低
-        if (w < 2500) {
+        if (w < 8500) {
             //serial.writeLine( "black")
             return color == DetectedColor.Black
         }
         // 白色：亮度高 + 饱和度低
-        if (s < 0.1) {
+        if (s < 0.07) {
             //serial.writeLine("white")
             return color == DetectedColor.White
         }
@@ -185,25 +185,25 @@ namespace LogosScratchJr {
 
         // ===== 分类（区间判断）=====
         if (color == DetectedColor.Red) {
-            if (h < 25 || h >= 345) return true
+            if (h < 16 || h >= 345) return true
             return false
         } else if (color == DetectedColor.Orange) {
-            if (h >= 25 && h < 45) return true
+            if (h >= 16 && h < 35) return true
             return false
         } else if (color == DetectedColor.Yellow) {
-            if (h >= 45 && h < 80) return true
+            if (h >= 35 && h < 70) return true
             return false
         } else if (color == DetectedColor.Green) {
-            if (h >= 80 && h < 180) return true
+            if (h >= 70 && h < 180) return true
             return false
         } else if (color == DetectedColor.Cyan) {
-            if (h >= 180 && h < 223) return true
+            if (h >= 180 && h < 200) return true
             return false
         } else if (color == DetectedColor.Blue) {
-            if (h >= 223 && h < 240) return true
+            if (h >= 200 && h < 240) return true
             return false
         } else if (color == DetectedColor.Purple) {
-            if (h >= 235 && h < 345) return true
+            if (h >= 240 && h < 345) return true
             return false
         }
         return false
