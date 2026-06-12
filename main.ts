@@ -135,6 +135,17 @@ namespace LogosScratchJr {
         pins.i2cWriteBuffer(i2cAddress, cmdBuf);
     }
 
+    //#########################################################################
+    //##################################舵机#################################
+    //#########################################################################
+
+    //% blockId=servo1Set
+    //% block="set 360° servo to %value °"
+    //% value.min=0 value.max=360 value.defl=90
+    //% group="Servo Motor" weight=9
+    export function servo1Set( value: number): void {
+        pins.servoWritePin(DigitalPin.P0, value)
+    }
 
 
 
