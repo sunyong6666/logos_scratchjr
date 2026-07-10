@@ -30,6 +30,14 @@ enum MotorMotion {
     Backward = 2
 }
 
+//转动方向
+enum RotationDirection {
+    //% block="clockwise"
+    Clockwise = 1,
+    //% block="counterclockwise"
+    Counterclockwise = -1
+}
+
 
 //% color="#6CACE4" icon="" block="Logos ScratchJr"
 namespace LogosScratchJr {
@@ -139,12 +147,45 @@ namespace LogosScratchJr {
     //##################################舵机#################################
     //#########################################################################
 
-    //% blockId=servo1Set
-    //% block="set 360° servo to %value °"
-    //% value.min=0 value.max=360 value.defl=90
-    //% group="Servo Motor" weight=9
-    export function servo1Set( value: number): void {
-        pins.servoWritePin(DigitalPin.P0, value)
+    //% blockId=servo360Run
+    //% block="run 360° servo  at speed %speed %direction"
+    //% speed.min=0 speed.max=100 speed.defl=50
+    //% group="Servo Motor" weight=5
+    export function servo360Run( speed: number, direction: RotationDirection): void {
+        // 限制速度范围
+        speed = Math.min(100, Math.max(0, speed))
+
+        if (speed > 0 && speed < 30) {
+            speed = 30
+        }
+
+        // 计算脉冲宽度
+        // 中间位置：1.5ms (1500µs) = 停止
+        // 顺时针方向：1.0ms (500µs) = 全速逆时针
+        // 逆时针方向：2.0ms (2500µs) = 全速顺时针
+        let pulseWidth: number
+
+        if (speed === 0) {
+            pulseWidth = 1500
+        } else {
+            if (direction === RotationDirection.Clockwise) {
+                // 500-1500µs 对应速度 0-100
+                pulseWidth = 1500 - (speed * 10)
+            } else {
+                // 1000-2500µs 对应速度 0-100
+                pulseWidth = 1500 + (speed * 10)
+            }
+        }
+        // 设置脉冲宽度
+        pins.servoSetPulse(DigitalPin.P0, pulseWidth)
+    }
+
+    //% blockId=servo360Stop
+    //% block="stop 360° servo %pin"
+    //% group="Servo Motor" weight=3
+    export function servo360Stop(): void {
+        // 设置脉冲宽度为1.5ms停止
+        pins.servoSetPulse(DigitalPin.P0, 1500)
     }
 
 
