@@ -1,17 +1,17 @@
 //----------------------------------颜色传感器-------------------------------
-const GAIN_R = 1.82
-const GAIN_G = 1.5
-const GAIN_B = 2.4
+const GAIN_R = 1.78
+const GAIN_G = 1.54
+const GAIN_B = 2.55
 
 // ===== VEML6040 I2C 地址 =====
-const VEML6040_ADDR = 0x10
+const VEML6040_ADDR = 0x27
 
 // ===== 寄存器地址 =====
-const REG_CONF = 0x00
-const REG_RED = 0x08
-const REG_GREEN = 0x09
-const REG_BLUE = 0x0A
-const REG_WHITE = 0x0B
+const REG_CONF = 0x00 + 0x0A
+const REG_RED = 0x08 + 0x0A
+const REG_GREEN = 0x09 + 0x0A
+const REG_BLUE = 0x0A + 0x0A
+const REG_WHITE = 0x0B + 0x0A
 
 // ===== 积分时间 =====
 const IT_320MS = 0x30
@@ -155,16 +155,16 @@ namespace LogosScratchJr {
         if (max != min) {
             s = (max - min) / max
         }
-        //serial.writeLine("S="+s + " w="+w)
+        serial.writeLine("S="+s + " w="+w)
         // ===== 黑白判断 =====
         // 黑色：亮度低
-        if (w < 8500) {
-            //serial.writeLine( "black")
+        if (w < 4500) {
+            serial.writeLine( "black")
             return color == DetectedColor.Black
         }
         // 白色：亮度高 + 饱和度低
-        if (s < 0.07) {
-            //serial.writeLine("white")
+        if (s < 0.15) {
+            serial.writeLine("white")
             return color == DetectedColor.White
         }
 
@@ -181,7 +181,7 @@ namespace LogosScratchJr {
 
         if (h < 0) h += 360
 
-        //serial.writeLine("H=" + h + " S=" + s)
+        serial.writeLine("H=" + h + " S=" + s)
 
         // ===== 分类（区间判断）=====
         if (color == DetectedColor.Red) {
